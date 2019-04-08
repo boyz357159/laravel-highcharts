@@ -31,6 +31,22 @@ class JsTransformerPresenter
         return $this;
     }
 
+    private function createJsCode($data) {
+        $a = $data['url'];
+
+        return 'location.href = '.'\''.$a.'\'';
+    }   
+
+    public function encode_exporting()
+    {
+        $data = $this->exporting;
+
+        $this->exporting = !empty($data) ? 'exporting: { buttons: { customButton: {text: "顯示更多", onclick: function () {'. $this->createJsCode($this->exporting) .'}}}}'.',' : null;
+
+        return $this;
+    }
+
+
     public function encode_sub_title()
     {
         $data = $this->subtitle;
@@ -126,6 +142,7 @@ class JsTransformerPresenter
 
     public function transform()
     {
+        $this->encode_exporting();
         $this->encode_title();
         $this->encode_sub_title();
         $this->encode_y_axis();
@@ -136,7 +153,7 @@ class JsTransformerPresenter
         $this->encode_chart();
         $this->encode_colors();
         $this->credits();
-
+        
         $allString = $this->title.
         $this->subtitle.
         $this->yAxis.
@@ -146,6 +163,7 @@ class JsTransformerPresenter
         $this->series.
         $this->chart.
         $this->colors.
+        $this->exporting.
         $this->credits;
 
         $allString = substr($allString, 0, -1);

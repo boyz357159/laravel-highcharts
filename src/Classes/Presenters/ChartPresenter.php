@@ -21,6 +21,7 @@ class ChartPresenter
         $this->title = [];
     }
 
+
     public function highcart_js($bool = true)
     {
         $this->js->highchart = $bool;
@@ -60,6 +61,13 @@ class ChartPresenter
     public function container($container = 'container')
     {
         $this->transform->container = $container;
+
+        return $this;
+    }
+
+    public function exporting($exporting = [])
+    {
+        $this->transform->exporting = $exporting;
 
         return $this;
     }
